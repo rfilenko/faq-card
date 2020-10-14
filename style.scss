@@ -1,0 +1,223 @@
+// colors
+$darkBlue: hsl(238, 29%, 16%);
+$softBlue: hsl(240, 73%, 65%);
+$red: hsl(14, 88%, 65%);
+$violet: hsl(273, 75%, 66%);
+$grayishBlue: hsl(240, 5%, 91%);
+$veryDarkGrayishBlue: hsl(237, 12%, 33%);
+$darkGrayishBlue: hsl(240, 6%, 50%);
+
+:root {
+  --details-transition-time: 350ms;
+}
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    height: 0;
+  }
+  100% {
+    opacity: 1;
+    height: var(--details-height-open, '100%');
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-family: 'Kumbh Sans', sans-serif;
+  color: $veryDarkGrayishBlue;
+  line-height: 1.6;
+  background: linear-gradient(to bottom, $violet, $softBlue);
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+h1 {
+  margin-top: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: $veryDarkGrayishBlue;
+  font-size: 2rem;
+  text-align: center;
+}
+
+section {
+  max-width: 90%;
+  margin-top: 4rem;
+  position: relative;
+  padding: 1rem 1.5rem;
+  background: #fff;
+  border-radius: 1.25rem;
+  min-height: 65vh;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 20.3125rem; //325px
+  align-items: center;
+  box-shadow: 0px 9px 20px 6px rgba(0, 0, 0, 0.2);
+}
+.section-illustration {
+  width: 100%;
+  position: absolute;
+  top: -90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  img {
+    width: 200px;
+    &:last-of-type {
+      position: absolute;
+
+      top: -16px;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+    .box {
+      transform: translateX(-20px);
+    }
+  }
+  .box {
+    display: none;
+    transition: transform 0.3s ease-in;
+  }
+}
+
+// accordion
+.accordion {
+  width: 100%;
+  padding-top: 5rem;
+}
+summary {
+  font-size: 1.2em;
+  color: $darkGrayishBlue;
+  list-style: none;
+  position: relative;
+  padding-right: 1rem;
+  line-height: 1.2;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  &:hover {
+    color: $red;
+  }
+  &:focus {
+    outline: 1px dotted;
+    outline-offset: 2px;
+    outline: none;
+  }
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+
+details {
+  transition: all ease-out var(--details-transition-time, 0);
+  max-height: var(--details-height-closed, auto);
+}
+
+details[open] {
+  max-height: var(--details-height-open, auto);
+}
+details summary::before {
+  content: '\203A';
+  position: absolute;
+  right: 0;
+  color: $red;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transform: translate(0%, -30%) rotate(90deg);
+}
+
+details[open] summary {
+  font-weight: bold;
+  &:before {
+    content: '\276E';
+    font-size: 1.25rem;
+  }
+}
+details {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid $darkGrayishBlue;
+  padding-bottom: 0.5rem;
+  div {
+    transition: all ease-out var(--details-transition-time, 0);
+    max-height: var(--details-content-height-closed, auto);
+    overflow: hidden;
+    animation-name: slideDown;
+    animation-duration: var(--details-transition-time);
+  }
+  &.is--open {
+    div {
+      max-height: var(--details-content-height-open, auto);
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  section {
+    margin-top: 0;
+    min-height: 65vh;
+    min-width: 90ch;
+    display: grid;
+    grid-template-columns: 45% 1fr;
+    gap: 1rem;
+    flex-basis: inherit;
+    background-image: url(./images/bg-pattern-desktop.svg);
+    background-repeat: no-repeat;
+    background-position: -150% 70%;
+    background-size: 75%;
+  }
+  .section-illustration {
+    position: relative;
+    left: -55px;
+    top: 0;
+    img {
+      width: inherit;
+      max-width: 350px;
+    }
+    .box {
+      display: block;
+      width: 99px;
+      position: absolute;
+      left: -17px;
+      top: -1px;
+    }
+    .pattern {
+      display: none;
+    }
+  }
+  .big-illustration {
+    clip: rect(0px, 980px, 980px, 58px);
+    position: absolute;
+    left: -27px;
+  }
+
+  .accordion {
+    width: 90%;
+    padding-top: 2rem;
+    h1 {
+      text-align: left;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  section {
+    min-width: 105ch;
+  }
+  .section-illustration {
+    .box {
+      top: -29px;
+      left: -42px;
+      width: 150px;
+    }
+  }
+}
